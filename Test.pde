@@ -52,21 +52,22 @@ public void keyEvent(KeyEvent e)
 }
  
 public void pre() {
-//  S4P.updateSprites(sw.getElapsedTime());
 //  println((random(0, 240)));
 //  println("patate");
-  if ((random(0, 240)) < 10)
-  {
-    if (lastEnnemy == NBR_BULLET)
+  S4P.updateSprites(sw.getElapsedTime());
+  vessel.pre(sw.getElapsedTime());
+  if (lastEnnemy == NBR_BULLET)
       {
         return;
 //        lastEnnemy = 0;
       }
+  if ((random(0, 240)) < 10)
+  {
+  
     ennemies[lastEnnemy].setXY(width + 50, (random(10, height - 10)));
     ennemies[lastEnnemy].setVelX(-1 * random(50, 100));
     ++lastEnnemy;
   }
-  
 }
 
 void draw()
@@ -74,29 +75,26 @@ void draw()
   background(0);
   
   if (vessel.allowedShoot()){
-  for (int i = 0; i < NBR_BULLET; ++i)
-  {
-    if (bulletFiring == 0 && !bulletsW[i].isOnScreem())
-      {
-          bulletsW[i].fire(vessel.getX(), vessel.getY());
-          break; 
-      }
-    if (bulletFiring == 1 && !bulletsF[i].isOnScreem())
-      {
-          bulletsF[i].fire(vessel.getX(), vessel.getY());
-          break; 
-      }
-    if (bulletFiring == 2 && !bulletsT[i].isOnScreem())
-      {
-          bulletsT[i].fire(vessel.getX(), vessel.getY());
-          break; 
-      }
+    for (int i = 0; i < NBR_BULLET; ++i)
+    {
+      if (bulletFiring == 0 && !bulletsW[i].isOnScreem())
+        {
+            bulletsW[i].fire(vessel.getX(), vessel.getY());
+            break; 
+        }
+      if (bulletFiring == 1 && !bulletsF[i].isOnScreem())
+        {
+            bulletsF[i].fire(vessel.getX(), vessel.getY());
+            break; 
+        }
+      if (bulletFiring == 2 && !bulletsT[i].isOnScreem())
+        {
+            bulletsT[i].fire(vessel.getX(), vessel.getY());
+            break; 
+        }
+     }
    }
-  }
-println(lastEnnemy);  
-  bulletsW[0].pre(sw.getElapsedTime());
-//  ennemies[0].pre(sw.getElapsedTime());
-  vessel.pre(sw.getElapsedTime());
+
   for (int i = 0; i < NBR_BULLET; ++i)
   {
      if (bulletFiring == 0)

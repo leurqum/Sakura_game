@@ -16,9 +16,8 @@ class Ship {
 
   public void pre(double elapsedTime)
   {
-    S4P.updateSprites(elapsedTime);
     time += elapsedTime;
-    if (time > 0.0006)
+    if (time > 0.002)
     {
      shoot = true;
      time = 0.0; 

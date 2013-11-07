@@ -15,7 +15,7 @@ class Ennemy {
 
   public void pre(double elapsedTime)
   {
-    S4P.updateSprites(elapsedTime);
+//    S4P.updateSprites(elapsedTime);
     time += elapsedTime;
     if (time > 0.0006)
     {
