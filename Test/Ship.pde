@@ -8,7 +8,6 @@ class Ship {
   {
     me = _s;
     me.setFrameSequence(0, 3, 0.2f);
-    me.setDomain(0, 0, width-me.getWidth(), height, Sprite.HALT);
     me.setDead(false);
     shoot = false;
     time = 0.0;
@@ -17,7 +16,7 @@ class Ship {
   public void pre(double elapsedTime)
   {
     time += elapsedTime;
-    if (time > 0.002)
+    if (time > 0.2)
     {
      shoot = true;
      time = 0.0; 

@@ -25,5 +25,14 @@ class Bullet {
   {
     me.setXY(_x, _y); 
   }
+  
+  public void touchEnnemy(Ennemy e)
+  {
+    if (me.cc_collision(e.getSprite()))
+     {
+       e.kill();
+       me.setXY(-100, -100);
+     } 
+  }
 }
 

@@ -29,13 +29,21 @@ public void setup()
     bulletsF[i].fire(-100, -100);
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 52));
     bulletsT[i].fire(-100, -100);
-    ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53));  
+    if ((i % 2) == 0) {
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 0);  
+    }
+    else if ((i % 3) == 0) {
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 1); 
+    }
+    else {
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 2); 
+    }
     ennemies[i].setXY(-100, -100);
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
 
   registerMethod("keyEvent", this);  //keyboad handler
-  registerMethod("pre", this);  //keyboad handler
+  registerMethod("pre", this);
 }
 
 
@@ -55,8 +63,21 @@ public void keyEvent(KeyEvent e)
 }
 
 public void pre() {
-  S4P.updateSprites(sw.getElapsedTime());
-  vessel.pre(sw.getElapsedTime());
+  double elapsedTime = sw.getElapsedTime();
+  S4P.updateSprites(elapsedTime);
+  vessel.pre(elapsedTime);
+  for (int i = 0; i < NBR_BULLET; ++i)
+  {
+    for (int u = 0; u < NBR_BULLET; ++u) {
+     if (ennemies[u].getType() == 0)
+       bulletsW[i].touchEnnemy(ennemies[u]);
+     if (ennemies[u].getType() == 1)
+       bulletsF[i].touchEnnemy(ennemies[u]);
+     if (ennemies[u].getType() == 2)
+       bulletsT[i].touchEnnemy(ennemies[u]);
+    }
+  }
+
   if (lastEnnemy == NBR_BULLET)
   {
     return;
