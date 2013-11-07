@@ -4,6 +4,8 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
+PImage bimg;
+
 Ship vessel;
 Bullet[] bulletsW = new Bullet[NBR_BULLET];
 Bullet[] bulletsF = new Bullet[NBR_BULLET];
@@ -15,7 +17,9 @@ int lastEnnemy;
 
 public void setup() 
 {
-  size(1200, 480);
+  size(1280, 550);
+  //  size(3840, 1080);
+  bimg = loadImage("Sprite\\Background.jpg");
   lastEnnemy = 0;
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -27,43 +31,38 @@ public void setup()
     bulletsT[i].fire(-100, -100);
     ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53));  
     ennemies[i].setXY(-100, -100);
-}
+  }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
 
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);  //keyboad handler
-
 }
- 
- 
+
+
 public void keyEvent(KeyEvent e)
 {
- switch(e.getKeyCode()) {
-   case 'Q':
-     bulletFiring = 0;
-     break;
-   case 'W':
-     bulletFiring = 1;
-     break;
-   case 'E':
-     bulletFiring = 2;
-     break;
- } 
+  switch(e.getKeyCode()) {
+  case 'Q':
+    bulletFiring = 0;
+    break;
+  case 'W':
+    bulletFiring = 1;
+    break;
+  case 'E':
+    bulletFiring = 2;
+    break;
+  }
 }
- 
+
 public void pre() {
-//  println((random(0, 240)));
-//  println("patate");
   S4P.updateSprites(sw.getElapsedTime());
   vessel.pre(sw.getElapsedTime());
   if (lastEnnemy == NBR_BULLET)
-      {
-        return;
-//        lastEnnemy = 0;
-      }
+  {
+    return;
+  }
   if ((random(0, 240)) < 10)
   {
-  
     ennemies[lastEnnemy].setXY(width + 50, (random(10, height - 10)));
     ennemies[lastEnnemy].setVelX(-1 * random(50, 100));
     ++lastEnnemy;
@@ -72,38 +71,30 @@ public void pre() {
 
 void draw()
 {
-  background(0);
-  
-  if (vessel.allowedShoot()){
+  background(bimg);
+
+  if (vessel.allowedShoot()) {
     for (int i = 0; i < NBR_BULLET; ++i)
     {
       if (bulletFiring == 0 && !bulletsW[i].isOnScreem())
-        {
-            bulletsW[i].fire(vessel.getX(), vessel.getY());
-            break; 
-        }
+      {
+        bulletsW[i].fire(vessel.getX(), vessel.getY());
+        break;
+      }
       if (bulletFiring == 1 && !bulletsF[i].isOnScreem())
-        {
-            bulletsF[i].fire(vessel.getX(), vessel.getY());
-            break; 
-        }
+      {
+        bulletsF[i].fire(vessel.getX(), vessel.getY());
+        break;
+      }
       if (bulletFiring == 2 && !bulletsT[i].isOnScreem())
-        {
-            bulletsT[i].fire(vessel.getX(), vessel.getY());
-            break; 
-        }
-     }
-   }
-
-  for (int i = 0; i < NBR_BULLET; ++i)
-  {
-     if (bulletFiring == 0)
-      bulletsW[i].draw();
-     if (bulletFiring == 1)
-      bulletsF[i].draw();
-     if (bulletFiring == 2)
-      bulletsT[i].draw();
+      {
+        bulletsT[i].fire(vessel.getX(), vessel.getY());
+        break;
+      }
+    }
   }
+
   vessel.draw();
   S4P.drawSprites();
 }
+

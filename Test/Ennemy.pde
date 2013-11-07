@@ -7,7 +7,7 @@ class Ennemy {
   Ennemy(Sprite _s)
   {
     me = _s;
-    me.setFrameSequence(0, 7, 0.2f);
+    me.setFrameSequence(0, 3, random(0.1f, 0.3f));
     me.setDead(false);
     shoot = false;
     time = 0.0;
@@ -15,7 +15,6 @@ class Ennemy {
 
   public void pre(double elapsedTime)
   {
-//    S4P.updateSprites(elapsedTime);
     time += elapsedTime;
     if (time > 0.0006)
     {

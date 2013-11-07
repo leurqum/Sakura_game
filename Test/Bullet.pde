@@ -11,11 +11,6 @@ class Bullet {
     me.setDead(false);
   }
 
-  public void pre(double elapsedTime)
-  {
-//    S4P.updateSprites(elapsedTime);
-  }
-
   public void draw()
   {
     me.draw();
