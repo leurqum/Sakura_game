@@ -5,7 +5,7 @@ class Bullet {
   Bullet(Sprite _s)
   {
     me = _s;
-    me.setFrameSequence(0, 7, 0.2f);
+    me.setFrameSequence(0, 3, 0.2f);
     me.setRot(-67.5);
     me.setVelX(300.0);
     me.setDead(false);
@@ -13,7 +13,7 @@ class Bullet {
 
   public void pre(double elapsedTime)
   {
-    S4P.updateSprites(elapsedTime);
+//    S4P.updateSprites(elapsedTime);
   }
 
   public void draw()

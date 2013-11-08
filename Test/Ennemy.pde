@@ -1,14 +1,13 @@
-class Ship {
+class Ennemy {
 
   Sprite me;
   boolean shoot;
   double time;
 
-  Ship(Sprite _s)
+  Ennemy(Sprite _s)
   {
     me = _s;
     me.setFrameSequence(0, 7, 0.2f);
-    me.setDomain(0, 0, width-me.getWidth(), height, Sprite.HALT);
     me.setDead(false);
     shoot = false;
     time = 0.0;
@@ -16,7 +15,7 @@ class Ship {
 
   public void pre(double elapsedTime)
   {
-    S4P.updateSprites(elapsedTime);
+//    S4P.updateSprites(elapsedTime);
     time += elapsedTime;
     if (time > 0.0006)
     {
@@ -43,6 +42,7 @@ class Ship {
   public void draw()
   {
     me.setXY(mouseX, mouseY);
+    S4P.drawSprites();
   }
 
   public boolean allowedShoot()
@@ -73,6 +73,11 @@ class Ship {
   public void moveRight()
   {
    me.setX(me.getX() + 5.0 );
+  }
+  
+  public void setVelX(float vel)
+  {
+    me.setVelX(vel);
   } 
   
 }
