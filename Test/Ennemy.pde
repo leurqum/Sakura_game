@@ -90,5 +90,11 @@ class Ennemy {
   {
     return type; 
   }
+  
+  public void update(int w)
+  {
+    if (me.getX() < 0)
+      me.setX(w + 50);
+  } 
 }
 

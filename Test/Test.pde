@@ -38,7 +38,9 @@ public void setup()
     else {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 2); 
     }
-    ennemies[i].setXY(-100, -100);
+    ennemies[i].getSprite().setDomain(-40, -40, width+ennemies[i].getSprite().getWidth()/2, height+ennemies[i].getSprite().getHeight()/2, Sprite.REBOUND);
+    ennemies[i].setXY(-40,random(-300, 300));
+    ennemies[i].getSprite().setSpeed(random(-100, 100),random(-300, 300));
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
 
@@ -93,7 +95,10 @@ public void pre() {
 void draw()
 {
   background(bimg);
-
+  for (int i = 0; i < NBR_BULLET; ++i)
+    {
+      ennemies[i].update(width);
+    }
   if (vessel.allowedShoot()) {
     for (int i = 0; i < NBR_BULLET; ++i)
     {
