@@ -1,14 +1,23 @@
 class Bullet {
  
   Sprite me;
+  int type;
  
-  Bullet(Sprite _s)
+  Bullet(Sprite _s, int _t)
   {
     me = _s;
     me.setFrameSequence(0, 3, 0.2f);
-    me.setRot(-67.5);
+     if (_t != 0)
+     {
+       me.setRot(-67.5);
+     }
+     else
+     {
+       me.setScale(0.2);
+     }
     me.setVelX(300.0);
     me.setDead(false);
+    type = _t;
   }
 
   public void draw()
