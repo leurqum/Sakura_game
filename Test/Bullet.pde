@@ -11,11 +11,6 @@ class Bullet {
     me.setDead(false);
   }
 
-  public void pre(double elapsedTime)
-  {
-//    S4P.updateSprites(elapsedTime);
-  }
-
   public void draw()
   {
     me.draw();
@@ -29,6 +24,15 @@ class Bullet {
   public void fire(double _x, double _y)
   {
     me.setXY(_x, _y); 
+  }
+  
+  public void touchEnnemy(Ennemy e)
+  {
+    if (me.cc_collision(e.getSprite()))
+     {
+       e.kill();
+       me.setXY(-100, -100);
+     } 
   }
 }
 

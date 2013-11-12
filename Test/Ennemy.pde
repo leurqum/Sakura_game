@@ -3,25 +3,21 @@ class Ennemy {
   Sprite me;
   boolean shoot;
   double time;
+  int type;
 
-  Ennemy(Sprite _s)
+  Ennemy(Sprite _s, int _type)
   {
     me = _s;
-    me.setFrameSequence(0, 7, 0.2f);
+    me.setFrameSequence(0, 3, random(0.1f, 0.3f));
     me.setDead(false);
+    type = _type;
     shoot = false;
     time = 0.0;
   }
 
   public void pre(double elapsedTime)
   {
-//    S4P.updateSprites(elapsedTime);
-    time += elapsedTime;
-    if (time > 0.0006)
-    {
-     shoot = true;
-     time = 0.0; 
-    }
+
   }
   
   public void setXY(double x, double y)
@@ -42,7 +38,6 @@ class Ennemy {
   public void draw()
   {
     me.setXY(mouseX, mouseY);
-    S4P.drawSprites();
   }
 
   public boolean allowedShoot()
@@ -78,7 +73,22 @@ class Ennemy {
   public void setVelX(float vel)
   {
     me.setVelX(vel);
-  } 
+  }
   
+  public Sprite getSprite()
+  {
+    return me; 
+  }
+  
+  public void kill()
+  {
+    me.setXY(width + 50, (random(10, height - 10)));
+    me.setVelX(me.getVelX() * 1.05f);  
+  }
+  
+  public int getType()
+  {
+    return type; 
+  }
 }
 
