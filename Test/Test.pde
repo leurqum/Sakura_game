@@ -16,7 +16,7 @@ int bulletFiring = 0;
 int lastEnnemy;
 float typeTime;
 boolean typeActive;
-
+Sprite gui;
 
 public void setup() 
 {
@@ -35,20 +35,24 @@ public void setup()
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 52), 3);
     bulletsT[i].fire(-100, -100);
     if ((i % 2) == 0) {
-      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);  
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
     }
     else if ((i % 3) == 0) {
-      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 2); 
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 2);
     }
     else {
-      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 3); 
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 3);
     }
     ennemies[i].getSprite().setDomain(-40, -40, width+ennemies[i].getSprite().getWidth()/2, height+ennemies[i].getSprite().getHeight()/2, Sprite.REBOUND);
-    ennemies[i].setXY(-40,random(-300, 300));
-    ennemies[i].getSprite().setSpeed(random(-100, 100),random(-300, 300));
+    ennemies[i].setXY(-40, random(-300, 300));
+    ennemies[i].getSprite().setSpeed(random(-100, 100), random(-300, 300));
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
 
+  gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
+  gui.setRot(3.14);
+  gui.setXY(50, (height / 2));
+  gui.setScale(0.2);
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
 }
@@ -78,7 +82,7 @@ public void pre() {
   double elapsedTime = sw.getElapsedTime();
   S4P.updateSprites(elapsedTime);
   vessel.pre(elapsedTime);
-  
+
   if (typeTime <= 0)
   {
     bulletFiring = 0; 
@@ -92,10 +96,10 @@ public void pre() {
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     for (int u = 0; u < NBR_BULLET; ++u) {
-       bulletsW[i].touchEnnemy(ennemies[u]);
-       bulletsF[i].touchEnnemy(ennemies[u]);
-       bulletsT[i].touchEnnemy(ennemies[u]);
-       bulletsB[i].touchEnnemy(ennemies[u]);
+      bulletsW[i].touchEnnemy(ennemies[u]);
+      bulletsF[i].touchEnnemy(ennemies[u]);
+      bulletsT[i].touchEnnemy(ennemies[u]);
+      bulletsB[i].touchEnnemy(ennemies[u]);
     }
   }
 
@@ -115,9 +119,9 @@ void draw()
 {
   background(bimg);
   for (int i = 0; i < NBR_BULLET; ++i)
-    {
-      ennemies[i].update(width);
-    }
+  {
+    ennemies[i].update(width);
+  }
   if (vessel.allowedShoot()) {
     for (int i = 0; i < NBR_BULLET; ++i)
     {
