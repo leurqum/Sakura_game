@@ -4,6 +4,7 @@ class Ennemy {
   boolean shoot;
   double time;
   int type;
+  double health;
 
   Ennemy(Sprite _s, int _type)
   {
@@ -13,6 +14,7 @@ class Ennemy {
     type = _type;
     shoot = false;
     time = 0.0;
+    health = 5.0;
   }
 
   public void pre(double elapsedTime)
@@ -80,10 +82,15 @@ class Ennemy {
     return me; 
   }
   
-  public void kill()
+  public void kill(double damage)
   {
-    me.setXY(width + 50, (random(10, height - 10)));
-    me.setVelX(me.getVelX() * 1.05f);  
+    health -= damage;
+    if (health <= 0)
+    {
+      me.setXY(width + 50, (random(10, height - 10)));
+      me.setVelX(me.getVelX() * 1.05f);
+      health = 5;
+    }
   }
   
   public int getType()

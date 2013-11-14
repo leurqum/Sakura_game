@@ -81,21 +81,20 @@ public void pre() {
   
   if (typeTime <= 0)
   {
-    typeActive = false;
     bulletFiring = 0; 
-    typeTime = 2.5;
+    if (typeTime <= -1)
+    {
+      typeActive = false;
+      typeTime = 2.5;
+    }
   }
   typeTime -= elapsedTime;
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     for (int u = 0; u < NBR_BULLET; ++u) {
-     if (ennemies[u].getType() == 1)
        bulletsW[i].touchEnnemy(ennemies[u]);
-     else if (ennemies[u].getType() == 2)
        bulletsF[i].touchEnnemy(ennemies[u]);
-     else if (ennemies[u].getType() == 3)
        bulletsT[i].touchEnnemy(ennemies[u]);
-     else
        bulletsB[i].touchEnnemy(ennemies[u]);
     }
   }

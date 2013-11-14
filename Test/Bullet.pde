@@ -39,7 +39,18 @@ class Bullet {
   {
     if (me.cc_collision(e.getSprite()))
      {
-       e.kill();
+       if (type == 0)
+       {
+         e.kill(1);
+       }
+       else if (e.getType() == type)
+       {
+         e.kill(5);
+       }
+       else
+       {
+         e.kill(2);
+       }
        me.setXY(-100, -100);
      } 
   }
