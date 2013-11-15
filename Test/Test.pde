@@ -50,9 +50,8 @@ public void setup()
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
 
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
-  gui.setRot(3.14);
-  gui.setXY(50, (height / 2));
-  gui.setScale(0.2);
+  gui.setXY(140, (height / 2));
+  gui.setScale(0.6);
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
 }
