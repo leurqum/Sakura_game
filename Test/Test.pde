@@ -67,7 +67,7 @@ public void setup()
     ennemies[i].setXY(-40, random(-300, 300));
     ennemies[i].getSprite().setSpeed(random(-100, 100), random(-300, 300));
   }
-  vessel = new Ship(new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 50));
+  vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50));
 
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
   gui.setXY(140, (height / 2));
