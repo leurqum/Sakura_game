@@ -1,3 +1,5 @@
+
+import ddf.minim.*;
 import sprites.utils.*;
 import sprites.maths.*;
 import sprites.*;
@@ -5,6 +7,7 @@ import sprites.*;
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
 PImage bimg;
+Minim minim;
 
 Ship vessel;
 Bullet[] bulletsW = new Bullet[NBR_BULLET];
@@ -18,9 +21,26 @@ float typeTime;
 boolean typeActive;
 Sprite gui;
 
+AudioSample Bullet_card;
+AudioSample Bullet_fire;
+AudioSample Bullet_thunder;
+AudioSample Bullet_water;
+AudioPlayer BG_music;
+
 public void setup() 
 {
   size(1280, 550);
+  minim = new Minim(this);
+  Bullet_card = minim.loadSample("Sound\\Bullet_card.wav", 2048);
+  Bullet_card.setGain(-10.0);
+  Bullet_fire = minim.loadSample("Sound\\Bullet_fire.wav", 2048);
+  Bullet_fire.setGain(-10.0);
+  Bullet_thunder = minim.loadSample("Sound\\Bullet_thunder.wav", 2048);
+  Bullet_thunder.setGain(-10.0);
+  Bullet_water = minim.loadSample("Sound\\Bullet_water.wav", 2048);
+  Bullet_water.setGain(-10.0);
+  BG_music = minim.loadFile("Sound\\Background_music.mp3");
+  BG_music.loop();
   bimg = loadImage("Sprite\\Background.jpg");
   lastEnnemy = 0;
   typeTime = 2.5;
@@ -127,21 +147,25 @@ void draw()
       if (bulletFiring == 1 && !bulletsW[i].isOnScreem())
       {
         bulletsW[i].fire(vessel.getX(), vessel.getY());
+        Bullet_water.trigger();
         break;
       }
       else if (bulletFiring == 2 && !bulletsF[i].isOnScreem())
       {
         bulletsF[i].fire(vessel.getX(), vessel.getY());
+        Bullet_fire.trigger();
         break;
       }
       else if (bulletFiring == 3 && !bulletsT[i].isOnScreem())
       {
         bulletsT[i].fire(vessel.getX(), vessel.getY());
+        Bullet_thunder.trigger();
         break;
       }
       else if (bulletFiring == 0 && !bulletsB[i].isOnScreem())
       {
         bulletsB[i].fire(vessel.getX(), vessel.getY());
+        Bullet_card.trigger();
         break;
       }
     }
@@ -151,3 +175,11 @@ void draw()
   S4P.drawSprites();
 }
 
+void stop()
+{
+  Bullet_card.close();
+  Bullet_fire.close();
+  Bullet_thunder.close();
+  Bullet_water.close();
+  minim.stop();
+}
