@@ -3,6 +3,7 @@ class Ship {
   Sprite me;
   boolean shoot;
   double time;
+  int bonus;
 
   Ship(Sprite _s)
   {
@@ -11,16 +12,22 @@ class Ship {
     me.setDead(false);
     shoot = false;
     time = 0.0;
+    bonus = 0;
   }
 
   public void pre(double elapsedTime)
   {
     time += elapsedTime;
-    if (time > 0.2)
+    if (time - bonus > 0.2)
     {
      shoot = true;
      time = 0.0; 
     }
+  }
+  
+  public void bonus()
+  {
+     bonus = 1; 
   }
   
   public void setXY(double x, double y)

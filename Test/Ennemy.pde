@@ -102,6 +102,6 @@ class Ennemy {
   {
     if (me.getX() < 0)
       me.setX(w + 50);
-  } 
+  }
 }
 
