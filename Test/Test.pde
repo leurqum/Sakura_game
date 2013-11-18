@@ -6,7 +6,18 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
+
 PImage bimg;
+PImage bimg2;
+float xpos;
+float xpos2;
+float ypos;
+float xvel = 2;
+float yvel = 1;
+int imwidth;
+int imheight;
+
+
 Minim minim;
 
 Ship vessel;
@@ -29,6 +40,18 @@ AudioPlayer BG_music;
 
 public void setup() 
 {
+  imageMode(CENTER);
+  size (1280,550);
+  bimg=loadImage("./Sprite\\Background.jpg");
+  bimg2=loadImage("./Sprite\\Background.jpg");
+  xpos2=width/2 + width;
+  xpos=width/2;
+  ypos=height/2;
+  imwidth=bimg.width;
+  imheight=bimg.height;
+  image(bimg,xpos, ypos);
+  image(bimg2,xpos2, ypos);
+
   size(1280, 550);
   minim = new Minim(this);
   Bullet_card = minim.loadSample("Sound\\Bullet_card.wav", 2048);
@@ -41,7 +64,6 @@ public void setup()
   Bullet_water.setGain(-10.0);
   BG_music = minim.loadFile("Sound\\Background_music.mp3");
   BG_music.loop();
-  bimg = loadImage("Sprite\\Background.jpg");
   lastEnnemy = 0;
   typeTime = 2.5;
   for (int i = 0; i < NBR_BULLET; ++i)
@@ -136,7 +158,15 @@ public void pre() {
 
 void draw()
 {
-  background(bimg);
+  if (xpos <= -width/2)
+    xpos = width/2 + width;
+  if (xpos2 <= -width/2)
+    xpos2 = width/2 + width;
+  xpos -= xvel;
+  xpos2 -= xvel;
+  image(bimg,xpos, ypos);
+  image(bimg2,xpos2, ypos);
+  
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     ennemies[i].update(width);
