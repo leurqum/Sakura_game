@@ -8,7 +8,7 @@ class Ship {
   Ship(Sprite _s)
   {
     me = _s;
-    me.setFrameSequence(0, 3, 0.2f);
+    me.setFrameSequence(0, 7, 0.2f);
     me.setDead(false);
     shoot = false;
     time = 0.0;

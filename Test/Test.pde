@@ -54,8 +54,7 @@ public void setup()
 
   size(1280, 550);
   minim = new Minim(this);
-  Bullet_card = minim.loadSample("Sound\\Bullet_card.wav", 2048);
-  Bullet_card.setGain(-10.0);
+  Bullet_card = minim.loadSample("Sound\\Bullet_card.wav");
   Bullet_fire = minim.loadSample("Sound\\Bullet_fire.wav", 2048);
   Bullet_fire.setGain(-10.0);
   Bullet_thunder = minim.loadSample("Sound\\Bullet_thunder.wav", 2048);
@@ -70,11 +69,11 @@ public void setup()
   {
     bulletsB[i] = new Bullet(new Sprite(this, "Sprite\\Bullet_Base.png", 1, 1, 49), 0);
     bulletsB[i].fire(-100, -100);
-    bulletsW[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestW.png", 4, 1, 50), 1);
+    bulletsW[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestW.png", 4, 1, 49), 1);
     bulletsW[i].fire(-100, -100);
-    bulletsF[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestF.png", 4, 1, 51), 2);
+    bulletsF[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestF.png", 4, 1, 49), 2);
     bulletsF[i].fire(-100, -100);
-    bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 52), 3);
+    bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 49), 3);
     bulletsT[i].fire(-100, -100);
     if ((i % 2) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
@@ -115,6 +114,11 @@ public void keyEvent(KeyEvent e)
       bulletFiring = 3;
       typeActive = true;
       break;
+    case 'D':
+      bulletFiring = 4;
+      typeActive = false;
+      typeTime = 100000;
+      break;
     }
   }
 }
@@ -130,10 +134,14 @@ public void pre() {
     if (typeTime <= -1)
     {
       typeActive = false;
-      typeTime = 2.5;
+      typeTime = 1.5;
     }
   }
-  typeTime -= elapsedTime;
+  
+  if (typeActive) {
+    typeTime -= elapsedTime;
+  }
+  
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     for (int u = 0; u < NBR_BULLET; ++u) {
@@ -176,26 +184,26 @@ void draw()
     {
       if (bulletFiring == 1 && !bulletsW[i].isOnScreem())
       {
-        bulletsW[i].fire(vessel.getX(), vessel.getY());
         Bullet_water.trigger();
+        bulletsW[i].fire(vessel.getX(), vessel.getY());
         break;
       }
       else if (bulletFiring == 2 && !bulletsF[i].isOnScreem())
       {
-        bulletsF[i].fire(vessel.getX(), vessel.getY());
         Bullet_fire.trigger();
+        bulletsF[i].fire(vessel.getX(), vessel.getY());
         break;
       }
       else if (bulletFiring == 3 && !bulletsT[i].isOnScreem())
       {
-        bulletsT[i].fire(vessel.getX(), vessel.getY());
         Bullet_thunder.trigger();
+        bulletsT[i].fire(vessel.getX(), vessel.getY());
         break;
       }
       else if (bulletFiring == 0 && !bulletsB[i].isOnScreem())
       {
-        bulletsB[i].fire(vessel.getX(), vessel.getY());
         Bullet_card.trigger();
+        bulletsB[i].fire(vessel.getX(), vessel.getY());
         break;
       }
     }

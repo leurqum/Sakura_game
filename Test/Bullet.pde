@@ -32,7 +32,7 @@ class Bullet {
 
   public void fire(double _x, double _y)
   {
-    me.setXY(_x, _y); 
+    me.setXY(_x + 60, _y + 15); 
   }
   
   public void touchEnnemy(Ennemy e)
