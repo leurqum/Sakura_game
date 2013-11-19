@@ -117,7 +117,7 @@ public void keyEvent(KeyEvent e)
     case 'D':
       bulletFiring = 4;
       typeActive = false;
-      typeTime = 100000;
+      typeTime = 5;
       break;
     }
   }
@@ -125,9 +125,10 @@ public void keyEvent(KeyEvent e)
 
 public void pre() {
   double elapsedTime = sw.getElapsedTime();
-  S4P.updateSprites(elapsedTime);
-  vessel.pre(elapsedTime);
-
+  if (bulletFiring != 4) {
+    S4P.updateSprites(elapsedTime);
+    vessel.pre(elapsedTime);
+  }
   if (typeTime <= 0)
   {
     bulletFiring = 0; 
@@ -208,8 +209,9 @@ void draw()
       }
     }
   }
-
-  vessel.draw();
+  if (bulletFiring != 4) {
+      vessel.draw();
+  }
   S4P.drawSprites();
 }
 
