@@ -27,7 +27,7 @@ Bullet[] bulletsB = new Bullet[NBR_BULLET];
 Ennemy[] ennemies = new Ennemy[NBR_BULLET];
 int bulletFiring = 0;
 int lastEnnemy;
-float typeTime;
+
 boolean typeActive;
 Sprite gui;
 Sprite gameOver;
@@ -68,7 +68,7 @@ public void setup()
   GO_music = minim.loadFile("Sound\\GameOver_music.mp3");
 
   lastEnnemy = 0;
-  typeTime = 2.5;
+
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     bulletsB[i] = new Bullet(new Sprite(this, "Sprite\\Bullet_Base.png", 1, 1, 49), 0);
@@ -108,26 +108,19 @@ public void setup()
 
 public void keyEvent(KeyEvent e)
 {
-  if (!typeActive) {
-    switch(e.getKeyCode()) {
-    case 'Q':
-      bulletFiring = 1;
-      typeActive = true;
-      break;
-    case 'W':
-      bulletFiring = 2;
-      typeActive = true;
-      break;
-    case 'E':
-      bulletFiring = 3;
-      typeActive = true;
-      break;
-    case 'D':
-      bulletFiring = 4;
-      typeActive = false;
-      typeTime = 100000;
-      break;
-    }
+  switch(e.getKeyCode()) {
+  case 'Q':
+    bulletFiring = 1;
+    break;
+  case 'W':
+    bulletFiring = 2;
+    break;
+  case 'E':
+    bulletFiring = 3;
+    break;
+  case 'R':
+    bulletFiring = 0;
+    break;
   }
 }
 
@@ -135,20 +128,6 @@ public void pre() {
   double elapsedTime = sw.getElapsedTime();
   S4P.updateSprites(elapsedTime);
   vessel.pre(elapsedTime);
-
-  if (typeTime <= 0)
-  {
-    bulletFiring = 0; 
-    if (typeTime <= -1)
-    {
-      typeActive = false;
-      typeTime = 1.5;
-    }
-  }
-  
-  if (typeActive) {
-    typeTime -= elapsedTime;
-  }
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
