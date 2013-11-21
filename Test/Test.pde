@@ -1,4 +1,3 @@
-
 import ddf.minim.*;
 import sprites.utils.*;
 import sprites.maths.*;
@@ -16,7 +15,7 @@ float xvel = 2;
 float yvel = 1;
 int imwidth;
 int imheight;
-
+int fin = 0;
 
 Minim minim;
 
@@ -158,6 +157,7 @@ public void pre() {
       bulletsT[i].touchEnnemy(ennemies[u]);
       bulletsB[i].touchEnnemy(ennemies[u]);
     }
+     ennemies[i].touchShip(vessel);
   }
 
   if (lastEnnemy == NBR_BULLET)
@@ -182,6 +182,22 @@ void draw()
   xpos2 -= xvel;
   image(bimg,xpos, ypos);
   image(bimg2,xpos2, ypos);
+  
+  if (vessel.init == -1 && fin == 0)
+  {
+    fin = 1;
+    for (int i = 0; i < NBR_BULLET; ++i)
+    {
+      bulletsW[i].getSprite().setDead(true);
+      bulletsF[i].getSprite().setDead(true);
+      bulletsT[i].getSprite().setDead(true);
+      bulletsB[i].getSprite().setDead(true);
+      ennemies[i].getSprite().setDead(true);
+      return;
+    }
+  }
+  else if (vessel.init == -1)
+  return;
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {

@@ -103,5 +103,15 @@ class Ennemy {
     if (me.getX() < 0)
       me.setX(w + 50);
   }
+  
+  public void touchShip(Ship s)
+  {
+    if (me.cc_collision(s.getSprite()))
+    {
+        s.shoot = false;
+        s.getSprite().setDead(true);
+        s.init = -1;
+    }
+  }
 }
 

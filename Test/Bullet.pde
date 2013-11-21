@@ -25,6 +25,11 @@ class Bullet {
     me.draw();
   }
   
+  public Sprite getSprite()
+  {
+    return me; 
+  }
+  
   public boolean isOnScreem()
   {
     return me.isOnScreem();  

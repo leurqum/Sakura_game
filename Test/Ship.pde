@@ -4,6 +4,7 @@ class Ship {
   boolean shoot;
   double time;
   int bonus;
+  int init;
 
   Ship(Sprite _s)
   {
@@ -11,6 +12,8 @@ class Ship {
     me.setFrameSequence(0, 7, 0.2f);
     me.setDead(false);
     shoot = false;
+    me.setXY(150, 250);
+    init = 0;
     time = 0.0;
     bonus = 0;
   }
@@ -35,6 +38,11 @@ class Ship {
     me.setXY(x, y);
   }
   
+  public Sprite getSprite()
+  {
+    return me; 
+  }
+  
   public double getX()
   {
     return me.getX(); 
@@ -47,7 +55,16 @@ class Ship {
   
   public void draw()
   {
-    me.setXY(mouseX, mouseY);
+    if (init == 0)
+    {
+      me.setXY(150, 250);
+      init++;
+    }
+    else if  (init == -1)
+      me.setXY(5000, 5000);
+    else
+      me.setXY(mouseX, mouseY);
+    
   }
 
   public boolean allowedShoot()
