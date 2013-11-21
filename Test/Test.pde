@@ -96,6 +96,7 @@ public void setup()
 
   gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
   gameOver.setXY(xpos, ypos);
+  gameOver.setVisible(false);
   
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
   gui.setXY(140, (height / 2));
@@ -197,7 +198,16 @@ void draw()
     }
   }
   else if (vessel.init == -1)
-  return;
+  {
+    gameOver.setVisible(true);
+    gameOver.draw();
+    if (!GO_music.isPlaying())
+    {
+     BG_music.pause();
+     GO_music.play(); 
+    }
+    return;
+  }
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -232,7 +242,6 @@ void draw()
       }
     }
   }
-
   vessel.draw();
   S4P.drawSprites();
 }
