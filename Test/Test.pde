@@ -30,13 +30,22 @@ int bulletFiring = 0;
 int lastEnnemy;
 float typeTime;
 boolean typeActive;
-Sprite gui;
 
 AudioSample Bullet_card;
 AudioSample Bullet_fire;
 AudioSample Bullet_thunder;
 AudioSample Bullet_water;
 AudioPlayer BG_music;
+
+Sprite gui;
+Sprite fire_off;
+Sprite fire_on;
+Sprite water_off;
+Sprite water_on;
+Sprite thunder_off;
+Sprite thunder_on;
+Sprite card_off;
+Sprite card_on;
 
 public void setup() 
 {
@@ -91,8 +100,30 @@ public void setup()
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50));
 
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
-  gui.setXY(140, (height / 2));
+  gui.setXY(160, (height / 2));
   gui.setScale(0.6);
+  fire_on = new Sprite(this, "Sprite\\Fire_activated.png", 1, 1, 111);
+  fire_on.setXY(22, 230);
+  fire_on.setScale(0.4);
+  fire_on.setVisible(false);
+  fire_off = new Sprite(this, "Sprite\\Fire.png", 1, 1, 110);
+  fire_off.setXY(22, 230);
+  fire_off.setScale(0.4);
+  water_on = new Sprite(this, "Sprite\\Water_activated.png", 1, 1, 111);
+  water_on.setXY(22, 270);
+  water_on.setScale(0.4);
+  water_on.setVisible(false);
+  water_off = new Sprite(this, "Sprite\\Water.png", 1, 1, 110);
+  water_off.setXY(22, 270);
+  water_off.setScale(0.4);
+  thunder_on = new Sprite(this, "Sprite\\Lightning_activated.png", 1, 1, 111);
+  thunder_on.setXY(22, 310);
+  thunder_on.setScale(0.4);
+  thunder_on.setVisible(false);
+  thunder_off = new Sprite(this, "Sprite\\Lightning.png", 1, 1, 110);
+  thunder_off.setXY(22, 310);
+  thunder_off.setScale(0.4);
+  
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
 }
@@ -185,18 +216,27 @@ void draw()
     {
       if (bulletFiring == 1 && !bulletsW[i].isOnScreem())
       {
+        water_on.setVisible(true);
+        fire_on.setVisible(false);
+        thunder_on.setVisible(false);
         Bullet_water.trigger();
         bulletsW[i].fire(vessel.getX(), vessel.getY());
         break;
       }
       else if (bulletFiring == 2 && !bulletsF[i].isOnScreem())
       {
+        water_on.setVisible(false);
+        fire_on.setVisible(true);
+        thunder_on.setVisible(false);
         Bullet_fire.trigger();
         bulletsF[i].fire(vessel.getX(), vessel.getY());
         break;
       }
       else if (bulletFiring == 3 && !bulletsT[i].isOnScreem())
       {
+        water_on.setVisible(false);
+        fire_on.setVisible(false);
+        thunder_on.setVisible(true);
         Bullet_thunder.trigger();
         bulletsT[i].fire(vessel.getX(), vessel.getY());
         break;
