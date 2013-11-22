@@ -29,11 +29,6 @@ int bulletFiring = 0;
 int lastEnnemy;
 
 boolean typeActive;
-<<<<<<< HEAD
-=======
-Sprite gui;
-Sprite gameOver;
->>>>>>> d0ea242bc5ffee9a9a39957ad19260c60b05febd
 
 AudioSample Bullet_card;
 AudioSample Bullet_fire;
@@ -43,6 +38,7 @@ AudioPlayer BG_music;
 AudioPlayer GO_music;
 
 Sprite gui;
+Sprite gameOver;
 Sprite fire_off;
 Sprite fire_on;
 Sprite water_off;
@@ -108,7 +104,7 @@ public void setup()
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50));
 
   gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
-  gameOver.setXY(xpos, ypos);
+  gameOver.setXY(xpos - 50, ypos + 10);
   gameOver.setVisible(false);
   
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
