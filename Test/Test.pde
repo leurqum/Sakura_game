@@ -1,4 +1,3 @@
-
 import ddf.minim.*;
 import sprites.utils.*;
 import sprites.maths.*;
@@ -16,7 +15,7 @@ float xvel = 2;
 float yvel = 1;
 int imwidth;
 int imheight;
-
+int fin = 0;
 
 Minim minim;
 
@@ -28,14 +27,20 @@ Bullet[] bulletsB = new Bullet[NBR_BULLET];
 Ennemy[] ennemies = new Ennemy[NBR_BULLET];
 int bulletFiring = 0;
 int lastEnnemy;
-float typeTime;
+
 boolean typeActive;
+<<<<<<< HEAD
+=======
+Sprite gui;
+Sprite gameOver;
+>>>>>>> d0ea242bc5ffee9a9a39957ad19260c60b05febd
 
 AudioSample Bullet_card;
 AudioSample Bullet_fire;
 AudioSample Bullet_thunder;
 AudioSample Bullet_water;
 AudioPlayer BG_music;
+AudioPlayer GO_music;
 
 Sprite gui;
 Sprite fire_off;
@@ -70,10 +75,13 @@ public void setup()
   Bullet_thunder.setGain(-10.0);
   Bullet_water = minim.loadSample("Sound\\Bullet_water.wav", 2048);
   Bullet_water.setGain(-10.0);
+
   BG_music = minim.loadFile("Sound\\Background_music.mp3");
   BG_music.loop();
+  GO_music = minim.loadFile("Sound\\GameOver_music.mp3");
+
   lastEnnemy = 0;
-  typeTime = 2.5;
+
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     bulletsB[i] = new Bullet(new Sprite(this, "Sprite\\Bullet_Base.png", 1, 1, 49), 0);
@@ -99,6 +107,10 @@ public void setup()
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50));
 
+  gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
+  gameOver.setXY(xpos, ypos);
+  gameOver.setVisible(false);
+  
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
   gui.setXY(160, (height / 2));
   gui.setScale(0.6);
@@ -131,48 +143,26 @@ public void setup()
 
 public void keyEvent(KeyEvent e)
 {
-  if (!typeActive) {
-    switch(e.getKeyCode()) {
-    case 'Q':
-      bulletFiring = 1;
-      typeActive = true;
-      break;
-    case 'W':
-      bulletFiring = 2;
-      typeActive = true;
-      break;
-    case 'E':
-      bulletFiring = 3;
-      typeActive = true;
-      break;
-    case 'D':
-      bulletFiring = 4;
-      typeActive = false;
-      typeTime = 5;
-      break;
-    }
+  switch(e.getKeyCode()) {
+  case 'Q':
+    bulletFiring = 1;
+    break;
+  case 'W':
+    bulletFiring = 2;
+    break;
+  case 'E':
+    bulletFiring = 3;
+    break;
+  case 'R':
+    bulletFiring = 0;
+    break;
   }
 }
 
 public void pre() {
   double elapsedTime = sw.getElapsedTime();
-  if (bulletFiring != 4) {
-    S4P.updateSprites(elapsedTime);
-    vessel.pre(elapsedTime);
-  }
-  if (typeTime <= 0)
-  {
-    bulletFiring = 0; 
-    if (typeTime <= -1)
-    {
-      typeActive = false;
-      typeTime = 1.5;
-    }
-  }
-  
-  if (typeActive) {
-    typeTime -= elapsedTime;
-  }
+  S4P.updateSprites(elapsedTime);
+  vessel.pre(elapsedTime);
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -182,6 +172,7 @@ public void pre() {
       bulletsT[i].touchEnnemy(ennemies[u]);
       bulletsB[i].touchEnnemy(ennemies[u]);
     }
+     ennemies[i].touchShip(vessel);
   }
 
   if (lastEnnemy == NBR_BULLET)
@@ -206,6 +197,31 @@ void draw()
   xpos2 -= xvel;
   image(bimg,xpos, ypos);
   image(bimg2,xpos2, ypos);
+  
+  if (vessel.init == -1 && fin == 0)
+  {
+    fin = 1;
+    for (int i = 0; i < NBR_BULLET; ++i)
+    {
+      bulletsW[i].getSprite().setDead(true);
+      bulletsF[i].getSprite().setDead(true);
+      bulletsT[i].getSprite().setDead(true);
+      bulletsB[i].getSprite().setDead(true);
+      ennemies[i].getSprite().setDead(true);
+      return;
+    }
+  }
+  else if (vessel.init == -1)
+  {
+    gameOver.setVisible(true);
+    gameOver.draw();
+    if (!GO_music.isPlaying())
+    {
+     BG_music.pause();
+     GO_music.play(); 
+    }
+    return;
+  }
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -249,9 +265,7 @@ void draw()
       }
     }
   }
-  if (bulletFiring != 4) {
-      vessel.draw();
-  }
+  vessel.draw();
   S4P.drawSprites();
 }
 

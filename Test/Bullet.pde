@@ -25,6 +25,11 @@ class Bullet {
     me.draw();
   }
   
+  public Sprite getSprite()
+  {
+    return me; 
+  }
+  
   public boolean isOnScreem()
   {
     return me.isOnScreem();  
@@ -45,11 +50,7 @@ class Bullet {
        }
        else if (e.getType() == type)
        {
-         e.kill(5);
-       }
-       else
-       {
-         e.kill(2);
+         e.kill(10);
        }
        me.setXY(-100, -100);
      } 
