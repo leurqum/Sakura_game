@@ -6,6 +6,7 @@ import sprites.*;
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
 int NBR_ENNEMIES = 30;
+Timer t = new Timer(2000);
 
 PImage bimg;
 PImage bimg2;
@@ -101,10 +102,10 @@ public void setup()
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
     }
     else if ((i % 3) == 0) {
-      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 2);
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 3);
     }
     else {
-      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 3);
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyF.png", 2, 1, 53), 2);
     }
     ennemies[i].getSprite().setDomain(-40, -40, width+ennemies[i].getSprite().getWidth()/2, height+ennemies[i].getSprite().getHeight()/2, Sprite.REBOUND);
     ennemies[i].setXY(-40, random(-300, 300));
@@ -203,6 +204,11 @@ void draw()
   xpos2 -= xvel;
   image(bimg,xpos, ypos);
   image(bimg2,xpos2, ypos);
+  if(t.isFinished() == true)
+  {
+   vessel.score +=1;
+   t.start(); 
+  }
   
   if (vessel.init == -1 && fin == 0)
   {
@@ -231,7 +237,8 @@ void draw()
     }
     return;
   }
-  
+  textSize(24);
+  text("SCORE :"+vessel.score, 20, 20);
   for (int i = 0; i < NBR_ENNEMIES; ++i)
   {
     ennemies[i].update(width);

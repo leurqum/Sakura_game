@@ -7,6 +7,7 @@ class Ship {
   int bonus;
   int init;
   int life;
+  int score;
   float invincible;
 
   Ship(Sprite _s, Sprite _d)
@@ -25,7 +26,8 @@ class Ship {
     bonus = 0;
     life = 3;
     invincible = 4.0;
-    me.setCollisionRadius(0.8);
+    me.setCollisionRadius(0.9);
+    score = 0;
   }
 
   public void pre(double elapsedTime)
