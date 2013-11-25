@@ -1,21 +1,30 @@
 class Ship {
 
   Sprite me;
+  Sprite damaged;
   boolean shoot;
   double time;
   int bonus;
   int init;
+  int life;
+  float invincible;
 
-  Ship(Sprite _s)
+  Ship(Sprite _s, Sprite _d)
   {
     me = _s;
+    damaged = _d;
     me.setFrameSequence(0, 7, 0.2f);
     me.setDead(false);
+    damaged.setFrameSequence(0, 7, 0.2f);
+    damaged.setDead(false);
     shoot = false;
     me.setXY(150, 250);
+    damaged.setVisible(false);
     init = 0;
     time = 0.0;
     bonus = 0;
+    life = 3;
+    invincible = 4.0;
   }
 
   public void pre(double elapsedTime)
@@ -25,6 +34,16 @@ class Ship {
     {
      shoot = true;
      time = 0.0; 
+    }
+    
+    if (damaged.isVisible())
+    {
+      invincible -= elapsedTime;
+      if (invincible < 0)
+      {
+        invincible = 4.0;
+        damaged.setVisible(false); 
+      }
     }
   }
   
@@ -60,11 +79,14 @@ class Ship {
       me.setXY(150, 250);
       init++;
     }
-    else if  (init == -1)
+    else if  (init == -1) {
       me.setXY(5000, 5000);
-    else
+      damaged.setXY(5000, 5000);
+    }
+    else {
       me.setXY(mouseX, mouseY);
-    
+      damaged.setXY(mouseX, mouseY);
+    }
   }
 
   public boolean allowedShoot()
@@ -95,6 +117,20 @@ class Ship {
   public void moveRight()
   {
    me.setX(me.getX() + 5.0 );
+  }
+ 
+  public boolean damaged()
+  {
+    damaged.setVisible(true);
+    if (invincible != 4.0)
+      return false;
+    if (--life < 0) {
+      shoot = false;
+      me.setDead(true);
+      damaged.setDead(true);
+      init = -1;
+    }
+    return true;
   } 
   
 }

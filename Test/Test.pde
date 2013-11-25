@@ -109,7 +109,8 @@ public void setup()
     ennemies[i].setXY(-40, random(-300, 300));
     ennemies[i].getSprite().setSpeed(random(-100, 100), random(-300, 300));
   }
-  vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50));
+  vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50),
+                    new Sprite(this, "Sprite\\Sakura_flying_damage.png", 7, 1, 52));
 
   gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
   gameOver.setXY(xpos - 50, ypos + 10);

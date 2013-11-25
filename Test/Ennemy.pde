@@ -108,9 +108,11 @@ class Ennemy {
   {
     if (me.cc_collision(s.getSprite()))
     {
-        s.shoot = false;
-        s.getSprite().setDead(true);
-        s.init = -1;
+       if (s.damaged()) {
+         me.setXY(width + 50, (random(10, height - 10)));
+         me.setVelX(me.getVelX() * 1.05f);
+         health = 5;
+       }
     }
   }
 }
