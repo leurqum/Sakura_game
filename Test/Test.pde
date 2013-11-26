@@ -118,7 +118,7 @@ public void setup()
   gameOver.setVisible(false);
   
   gui = new Sprite(this, "Sprite\\flower_gui_pink.png", 1, 1, 100);
-  gui.setXY(160, (height / 2));
+  gui.setXY(150, (height / 2));
   gui.setScale(0.6);
   fire_on = new Sprite(this, "Sprite\\Fire_activated.png", 1, 1, 111);
   fire_on.setXY(22, 270);
@@ -237,7 +237,7 @@ void draw()
     return;
   }
   textSize(24);
-  text("SCORE :"+vessel.score, 20, 20);
+  text("SCORE :"+vessel.score, 20, 35);
   for (int i = 0; i < NBR_ENNEMIES; ++i)
   {
     ennemies[i].update(width);
