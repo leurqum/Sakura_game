@@ -111,18 +111,18 @@ public void setup()
   gui.setXY(160, (height / 2));
   gui.setScale(0.6);
   fire_on = new Sprite(this, "Sprite\\Fire_activated.png", 1, 1, 111);
-  fire_on.setXY(22, 230);
+  fire_on.setXY(22, 270);
   fire_on.setScale(0.4);
   fire_on.setVisible(false);
   fire_off = new Sprite(this, "Sprite\\Fire.png", 1, 1, 110);
-  fire_off.setXY(22, 230);
+  fire_off.setXY(22, 270);
   fire_off.setScale(0.4);
   water_on = new Sprite(this, "Sprite\\Water_activated.png", 1, 1, 111);
-  water_on.setXY(22, 270);
+  water_on.setXY(22, 230);
   water_on.setScale(0.4);
   water_on.setVisible(false);
   water_off = new Sprite(this, "Sprite\\Water.png", 1, 1, 110);
-  water_off.setXY(22, 270);
+  water_off.setXY(22, 230);
   water_off.setScale(0.4);
   thunder_on = new Sprite(this, "Sprite\\Lightning_activated.png", 1, 1, 111);
   thunder_on.setXY(22, 310);
@@ -255,6 +255,9 @@ void draw()
       }
       else if (bulletFiring == 0 && !bulletsB[i].isOnScreem())
       {
+        water_on.setVisible(false);
+        fire_on.setVisible(false);
+        thunder_on.setVisible(false);
         Bullet_card.trigger();
         bulletsB[i].fire(vessel.getX(), vessel.getY());
         break;
