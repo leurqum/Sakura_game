@@ -25,7 +25,7 @@ class Ship {
     bonus = 0;
     life = 3;
     invincible = 4.0;
-    me.setCollisionRadius(0.8);
+    me.setCollisionRadius(0.9);
   }
 
   public void pre(double elapsedTime)
