@@ -6,6 +6,7 @@ import sprites.*;
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
 int NBR_ENNEMIES = 30;
+Timer t = new Timer(2000);
 
 PImage bimg;
 PImage bimg2;
@@ -202,6 +203,11 @@ void draw()
   xpos2 -= xvel;
   image(bimg,xpos, ypos);
   image(bimg2,xpos2, ypos);
+  if(t.isFinished() == true)
+  {
+   vessel.score +=1;
+   t.start(); 
+  }
   
   if (vessel.init == -1 && fin == 0)
   {
@@ -230,7 +236,8 @@ void draw()
     }
     return;
   }
-  
+  textSize(24);
+  text("SCORE :"+vessel.score, 20, 20);
   for (int i = 0; i < NBR_ENNEMIES; ++i)
   {
     ennemies[i].update(width);
