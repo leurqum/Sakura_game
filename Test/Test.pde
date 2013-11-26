@@ -84,11 +84,12 @@ public void setup()
   {
     bulletsB[i] = new Bullet(new Sprite(this, "Sprite\\Bullet_Base.png", 1, 1, 49), 0);
     bulletsB[i].fire(-100, -100);
-    bulletsW[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestW.png", 4, 1, 49), 1);
+    bulletsW[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestW.png", 3, 1, 49), 1);
     bulletsW[i].fire(-100, -100);
     bulletsF[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestF.png", 4, 1, 49), 2);
     bulletsF[i].fire(-100, -100);
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 49), 3);
+    bulletsT[i].setScale(0.4f);
     bulletsT[i].fire(-100, -100);
   }
   

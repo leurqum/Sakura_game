@@ -7,14 +7,18 @@ class Bullet {
   {
     me = _s;
     me.setFrameSequence(0, 3, 0.2f);
-     if (_t != 0)
-     {
-       me.setRot(-67.5);
-     }
-     else
-     {
-       me.setScale(0.2);
-     }
+    if (_t != 0 && _t != 1)
+    {
+      me.setRot(-67.5);
+    }
+    else if (_t != 1)
+    {
+      me.setScale(0.2);
+    }
+    else
+    {
+      me.setScale(0.7);
+    }
     me.setVelX(300.0);
     me.setDead(false);
     type = _t;
@@ -38,6 +42,11 @@ class Bullet {
   public void fire(double _x, double _y)
   {
     me.setXY(_x + 60, _y + 15); 
+  }
+  
+  public void setScale(double s)
+  {
+    me.setScale(s); 
   }
   
   public void touchEnnemy(Ennemy e)
