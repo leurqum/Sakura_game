@@ -5,6 +5,7 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
+int NBR_ENNEMIES = 30;
 
 PImage bimg;
 PImage bimg2;
@@ -24,7 +25,7 @@ Bullet[] bulletsW = new Bullet[NBR_BULLET];
 Bullet[] bulletsF = new Bullet[NBR_BULLET];
 Bullet[] bulletsT = new Bullet[NBR_BULLET];
 Bullet[] bulletsB = new Bullet[NBR_BULLET];
-Ennemy[] ennemies = new Ennemy[NBR_BULLET];
+Ennemy[] ennemies = new Ennemy[NBR_ENNEMIES];
 int bulletFiring = 0;
 int lastEnnemy;
 
@@ -88,7 +89,14 @@ public void setup()
     bulletsF[i].fire(-100, -100);
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 49), 3);
     bulletsT[i].fire(-100, -100);
-    if ((i % 2) == 0) {
+  }
+  
+  for (int i = 0; i < NBR_ENNEMIES; ++i)
+  {
+    if ((i % 5) == 0) {
+      ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyL.png", 3, 1, 53), 0);
+    }
+    else if ((i % 2) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
     }
     else if ((i % 3) == 0) {
@@ -162,13 +170,13 @@ public void pre() {
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
-    for (int u = 0; u < NBR_BULLET; ++u) {
+    for (int u = 0; u < NBR_ENNEMIES; ++u) {
       bulletsW[i].touchEnnemy(ennemies[u]);
       bulletsF[i].touchEnnemy(ennemies[u]);
       bulletsT[i].touchEnnemy(ennemies[u]);
       bulletsB[i].touchEnnemy(ennemies[u]);
+      ennemies[u].touchShip(vessel);
     }
-     ennemies[i].touchShip(vessel);
   }
 
   if (lastEnnemy == NBR_BULLET)
@@ -203,9 +211,12 @@ void draw()
       bulletsF[i].getSprite().setDead(true);
       bulletsT[i].getSprite().setDead(true);
       bulletsB[i].getSprite().setDead(true);
-      ennemies[i].getSprite().setDead(true);
-      return;
     }
+    for (int i = 0; i < NBR_ENNEMIES; ++i)
+    {
+       ennemies[i].getSprite().setDead(true);
+    }
+    return;
   }
   else if (vessel.init == -1)
   {
@@ -219,7 +230,7 @@ void draw()
     return;
   }
   
-  for (int i = 0; i < NBR_BULLET; ++i)
+  for (int i = 0; i < NBR_ENNEMIES; ++i)
   {
     ennemies[i].update(width);
   }
