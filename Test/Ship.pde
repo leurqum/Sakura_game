@@ -16,6 +16,7 @@ class Ship {
     init = 0;
     time = 0.0;
     bonus = 0;
+    me.setCollisionRadius(1);
   }
 
   public void pre(double elapsedTime)
