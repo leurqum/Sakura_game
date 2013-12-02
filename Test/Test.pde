@@ -30,6 +30,8 @@ Ennemy[] ennemies = new Ennemy[NBR_ENNEMIES];
 int bulletFiring = 0;
 int lastEnnemy;
 
+Bomb bomb;
+
 boolean typeActive;
 
 AudioSample Bullet_card;
@@ -82,6 +84,10 @@ public void setup()
   spell = new Sprite(this, "Sprite\\CardCharging.png", 6, 1, 2);
   spell.setXY(135, (height / 2) - 4);
   spell.setScale(1.19);
+
+  bomb = new Bomb(new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200),
+                  new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200),
+                  new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200));
 
   lastEnnemy = 0;
 
@@ -147,13 +153,6 @@ public void setup()
   thunder_off = new Sprite(this, "Sprite\\Lightning.png", 1, 1, 110);
   thunder_off.setXY(22, 310);
   thunder_off.setScale(0.4);
-  card_on = new Sprite(this, "Sprite\\Card_activated.png", 1, 1, 111);
-  card_on.setXY(80, 270);
-  card_on.setScale(0.4);
-  card_off = new Sprite(this, "Sprite\\Card.png", 1, 1, 110);
-  card_off.setXY(80, 270);
-  card_off.setScale(0.4);
-  
   
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
@@ -177,6 +176,7 @@ public void keyEvent(KeyEvent e)
     break;
   case ' ':
     if (spell.getFrame() == 5) {
+      bomb.fire();
       spell.setFrame(0);
     }
     break;
@@ -187,6 +187,7 @@ public void pre() {
   double elapsedTime = sw.getElapsedTime();
   S4P.updateSprites(elapsedTime);
   vessel.pre(elapsedTime);
+  bomb.pre(elapsedTime);
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -196,7 +197,7 @@ public void pre() {
       vessel.score += bulletsF[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsT[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsB[i].touchEnnemy(ennemies[u]);
-      if (score_tmp != vessel.score && spell.getFrame() != 5 && random(0,5) < 1.0)
+      if (score_tmp != vessel.score && spell.getFrame() != 5 && random(0,5) < 11.0)
       {
         spell.setFrame(spell.getFrame() + 1);
       }
@@ -274,7 +275,6 @@ void draw()
         water_on.setVisible(true);
         fire_on.setVisible(false);
         thunder_on.setVisible(false);
-        card_on.setVisible(false);
         Bullet_water.trigger();
         bulletsW[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -284,7 +284,6 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(true);
         thunder_on.setVisible(false);
-        card_on.setVisible(false);
         Bullet_fire.trigger();
         bulletsF[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -294,7 +293,6 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(false);
         thunder_on.setVisible(true);
-        card_on.setVisible(false);
         Bullet_thunder.trigger();
         bulletsT[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -304,7 +302,6 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(false);
         thunder_on.setVisible(false);
-        card_on.setVisible(true);
         Bullet_card.trigger();
         bulletsB[i].fire(vessel.getX(), vessel.getY());
         break;
