@@ -82,7 +82,7 @@ class Ennemy {
     return me; 
   }
   
-  public void kill(double damage)
+  public int kill(int damage)
   {
     health -= damage;
     if (health <= 0)
@@ -90,7 +90,9 @@ class Ennemy {
       me.setXY(width + 50, (random(10, height - 10)));
       me.setVelX(me.getVelX() * 1.05f);
       health = 5;
+      return damage;
     }
+    return 0;
   }
   
   public int getType()

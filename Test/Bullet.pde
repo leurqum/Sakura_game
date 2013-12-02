@@ -49,20 +49,23 @@ class Bullet {
     me.setScale(s); 
   }
   
-  public void touchEnnemy(Ennemy e)
+  public int touchEnnemy(Ennemy e)
   {
+    int score = 0;
+    
     if (me.cc_collision(e.getSprite()))
      {
        if (type == 0)
        {
-         e.kill(1);
+         score = e.kill(1);
        }
        else if (e.getType() == type)
        {
-         e.kill(10);
+         score = e.kill(10);
        }
        me.setXY(-100, -100);
-     } 
+     }
+     return score;
   }
 }
 

@@ -5,7 +5,7 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
-int NBR_ENNEMIES = 30;
+int NBR_ENNEMIES = 100;
 Timer t = new Timer(2000);
 
 PImage bimg;
@@ -49,6 +49,7 @@ Sprite thunder_off;
 Sprite thunder_on;
 Sprite card_off;
 Sprite card_on;
+Sprite spell;
 
 public void setup() 
 {
@@ -78,19 +79,23 @@ public void setup()
   BG_music.loop();
   GO_music = minim.loadFile("Sound\\GameOver_music.mp3");
 
+  spell = new Sprite(this, "Sprite\\CardCharging.png", 6, 1, 2);
+  spell.setXY(135, (height / 2) - 4);
+  spell.setScale(1.19);
+
   lastEnnemy = 0;
 
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     bulletsB[i] = new Bullet(new Sprite(this, "Sprite\\Bullet_Base.png", 1, 1, 49), 0);
-    bulletsB[i].fire(-100, -100);
+    bulletsB[i].fire(-1000, -1000);
     bulletsW[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestW.png", 3, 1, 49), 1);
-    bulletsW[i].fire(-100, -100);
+    bulletsW[i].fire(-1000, -1000);
     bulletsF[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestF.png", 4, 1, 49), 2);
-    bulletsF[i].fire(-100, -100);
+    bulletsF[i].fire(-1000, -1000);
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 49), 3);
     bulletsT[i].setScale(0.4f);
-    bulletsT[i].fire(-100, -100);
+    bulletsT[i].fire(-1000, -1000);
   }
   
   for (int i = 0; i < NBR_ENNEMIES; ++i)
@@ -163,6 +168,11 @@ public void keyEvent(KeyEvent e)
   case 'R':
     bulletFiring = 0;
     break;
+  case ' ':
+    if (spell.getFrame() == 5) {
+      spell.setFrame(0);
+    }
+    break;
   }
 }
 
@@ -174,10 +184,15 @@ public void pre() {
   for (int i = 0; i < NBR_BULLET; ++i)
   {
     for (int u = 0; u < NBR_ENNEMIES; ++u) {
-      bulletsW[i].touchEnnemy(ennemies[u]);
-      bulletsF[i].touchEnnemy(ennemies[u]);
-      bulletsT[i].touchEnnemy(ennemies[u]);
-      bulletsB[i].touchEnnemy(ennemies[u]);
+      int score_tmp = vessel.score;
+      vessel.score += bulletsW[i].touchEnnemy(ennemies[u]);
+      vessel.score += bulletsF[i].touchEnnemy(ennemies[u]);
+      vessel.score += bulletsT[i].touchEnnemy(ennemies[u]);
+      vessel.score += bulletsB[i].touchEnnemy(ennemies[u]);
+      if (score_tmp != vessel.score && spell.getFrame() != 5 && random(0,5) < 1.0)
+      {
+        spell.setFrame(spell.getFrame() + 1);
+      }
       ennemies[u].touchShip(vessel);
     }
   }
@@ -204,7 +219,7 @@ void draw()
   xpos2 -= xvel;
   image(bimg,xpos, ypos);
   image(bimg2,xpos2, ypos);
-  if(t.isFinished() == true)
+  if(t.isFinished() == true && fin == 0)
   {
    vessel.score +=1;
    t.start(); 
@@ -230,6 +245,7 @@ void draw()
   {
     gameOver.setVisible(true);
     gameOver.draw();
+    text("SCORE :"+vessel.score, width / 2 - 50, height - 200);
     if (!GO_music.isPlaying())
     {
      BG_music.pause();
