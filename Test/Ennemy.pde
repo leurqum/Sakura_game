@@ -82,15 +82,19 @@ class Ennemy {
     return me; 
   }
   
-  public int kill(int damage)
+  public int kill(double damage)
   {
+    if (!me.isOnScreem())
+    {
+      return 0; 
+    }
     health -= damage;
     if (health <= 0)
     {
-      me.setXY(width + 50, (random(10, height - 10)));
+      me.setXY(width + 450, (random(10, height - 10)));
       me.setVelX(me.getVelX() * 1.05f);
       health = 5;
-      return damage;
+      return (int)damage;
     }
     return 0;
   }

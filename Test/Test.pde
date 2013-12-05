@@ -86,8 +86,8 @@ public void setup()
   spell.setScale(1.19);
 
   bomb = new Bomb(new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200),
-                  new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200),
-                  new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200));
+                  new Sprite(this, "Sprite\\BombIce.png", 6, 1, 200),
+                  new Sprite(this, "Sprite\\BombThunder.png", 4, 1, 200));
 
   lastEnnemy = 0;
 
@@ -176,7 +176,7 @@ public void keyEvent(KeyEvent e)
     break;
   case ' ':
     if (spell.getFrame() == 5) {
-      bomb.fire();
+      bomb.fire(bulletFiring);
       spell.setFrame(0);
     }
     break;
@@ -197,7 +197,9 @@ public void pre() {
       vessel.score += bulletsF[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsT[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsB[i].touchEnnemy(ennemies[u]);
-      if (score_tmp != vessel.score && spell.getFrame() != 5 && random(0,5) < 11.0)
+      vessel.score += bomb.touchEnnemy(ennemies[u]);
+
+      if (score_tmp != vessel.score && !bomb.isActive() && spell.getFrame() != 5 && random(0,5) < 1.5)
       {
         spell.setFrame(spell.getFrame() + 1);
       }
