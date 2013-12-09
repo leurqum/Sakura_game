@@ -154,6 +154,12 @@ public void setup()
   thunder_off = new Sprite(this, "Sprite\\Lightning.png", 1, 1, 110);
   thunder_off.setXY(22, 310);
   thunder_off.setScale(0.4);
+  card_on = new Sprite(this, "Sprite\\Card_activated.png", 1, 1, 111);
+  card_on.setXY(80, 270);
+  card_on.setScale(0.4);
+  card_off = new Sprite(this, "Sprite\\Card.png", 1, 1, 110);
+  card_off.setXY(80, 270);
+  card_off.setScale(0.4);
   
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
@@ -282,6 +288,7 @@ void draw()
         water_on.setVisible(true);
         fire_on.setVisible(false);
         thunder_on.setVisible(false);
+        card_on.setVisible(false);
         Bullet_water.trigger();
         bulletsW[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -291,6 +298,7 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(true);
         thunder_on.setVisible(false);
+        card_on.setVisible(false);
         Bullet_fire.trigger();
         bulletsF[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -300,6 +308,7 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(false);
         thunder_on.setVisible(true);
+        card_on.setVisible(false);
         Bullet_thunder.trigger();
         bulletsT[i].fire(vessel.getX(), vessel.getY());
         break;
@@ -309,6 +318,7 @@ void draw()
         water_on.setVisible(false);
         fire_on.setVisible(false);
         thunder_on.setVisible(false);
+        card_on.setVisible(true);
         Bullet_card.trigger();
         bulletsB[i].fire(vessel.getX(), vessel.getY());
         break;
