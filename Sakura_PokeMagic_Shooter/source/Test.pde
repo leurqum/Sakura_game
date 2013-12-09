@@ -5,7 +5,7 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
-int NBR_ENNEMIES = 100;
+int NBR_ENNEMIES = 30;
 Timer t = new Timer(2000);
 
 PImage bimg;
@@ -27,8 +27,12 @@ Bullet[] bulletsF = new Bullet[NBR_BULLET];
 Bullet[] bulletsT = new Bullet[NBR_BULLET];
 Bullet[] bulletsB = new Bullet[NBR_BULLET];
 Ennemy[] ennemies = new Ennemy[NBR_ENNEMIES];
+Sprite[] lifes = new Sprite[3];
+
 int bulletFiring = 0;
 int lastEnnemy;
+
+Bomb bomb;
 
 boolean typeActive;
 
@@ -83,6 +87,10 @@ public void setup()
   spell.setXY(135, (height / 2) - 4);
   spell.setScale(1.19);
 
+  bomb = new Bomb(new Sprite(this, "Sprite\\BombFire.png", 6, 1, 200),
+                  new Sprite(this, "Sprite\\BombIce.png", 6, 1, 200),
+                  new Sprite(this, "Sprite\\BombThunder.png", 4, 1, 200));
+
   lastEnnemy = 0;
 
   for (int i = 0; i < NBR_BULLET; ++i)
@@ -98,15 +106,23 @@ public void setup()
     bulletsT[i].fire(-1000, -1000);
   }
   
+  for (int i = 0; i < 3; ++i)
+  {
+    lifes[i] = new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 2);
+    lifes[i].setFrame(0);
+    lifes[i].setXY(40* (i + 1), 520);
+    lifes[i].setScale(0.5);   
+  }
+  
   for (int i = 0; i < NBR_ENNEMIES; ++i)
   {
     if ((i % 5) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyL.png", 3, 1, 53), 0);
     }
-    else if ((i % 2) == 0) {
+    else if ((i % 3) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
     }
-    else if ((i % 3) == 0) {
+    else if ((i % 3) == 1) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 3);
     }
     else {
@@ -117,7 +133,8 @@ public void setup()
     ennemies[i].getSprite().setSpeed(random(-100, 100), random(-300, 300));
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50),
-                    new Sprite(this, "Sprite\\Sakura_flying_damage.png", 7, 1, 52));
+                    new Sprite(this, "Sprite\\Sakura_flying_damage.png", 7, 1, 52),
+                    new Sprite(this, "Sprite\\Shield.png", 4, 1, 53));
 
   gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
   gameOver.setXY(xpos - 50, ypos + 10);
@@ -154,7 +171,6 @@ public void setup()
   card_off.setXY(80, 270);
   card_off.setScale(0.4);
   
-  
   registerMethod("keyEvent", this);  //keyboad handler
   registerMethod("pre", this);
 }
@@ -177,6 +193,11 @@ public void keyEvent(KeyEvent e)
     break;
   case ' ':
     if (spell.getFrame() == 5) {
+      bomb.fire(bulletFiring);
+      if (bulletFiring == 0)
+      {
+        vessel.activeShield(); 
+      }
       spell.setFrame(0);
     }
     break;
@@ -187,6 +208,7 @@ public void pre() {
   double elapsedTime = sw.getElapsedTime();
   S4P.updateSprites(elapsedTime);
   vessel.pre(elapsedTime);
+  bomb.pre(elapsedTime);
   
   for (int i = 0; i < NBR_BULLET; ++i)
   {
@@ -196,7 +218,9 @@ public void pre() {
       vessel.score += bulletsF[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsT[i].touchEnnemy(ennemies[u]);
       vessel.score += bulletsB[i].touchEnnemy(ennemies[u]);
-      if (score_tmp != vessel.score && spell.getFrame() != 5 && random(0,5) < 1.0)
+      vessel.score += bomb.touchEnnemy(ennemies[u]);
+
+      if (score_tmp != vessel.score && !bomb.isActive() && spell.getFrame() != 5 && random(0,5) < 1)
       {
         spell.setFrame(spell.getFrame() + 1);
       }
@@ -211,13 +235,19 @@ public void pre() {
   if ((random(0, 240)) < 10)
   {
     ennemies[lastEnnemy].setXY(width + 50, (random(10, height - 10)));
-    ennemies[lastEnnemy].setVelX(-1 * random(50, 100));
+    ennemies[lastEnnemy].setVelX(-1 * random(150, 400));
     ++lastEnnemy;
   }
 }
 
 void draw()
 {
+  
+   if (vessel.getLife() == 2)
+    lifes[2].setVisible(false);
+  if (vessel.getLife() == 1)
+    lifes[1].setVisible(false);
+
   if (xpos <= -width/2)
     xpos = width/2 + width;
   if (xpos2 <= -width/2)

@@ -55,13 +55,21 @@ class Bullet {
     
     if (me.cc_collision(e.getSprite()))
      {
-       if (type == 0)
+       if (e.getType() == 0 && type == 0)
        {
-         score = e.kill(1);
+         score = e.kill(3);
        }
        else if (e.getType() == type)
        {
          score = e.kill(10);
+       }
+       else if (type == 0)
+       {
+        score = e.kill(1); 
+       }
+       else
+       {
+        score = e.kill(0.5); 
        }
        me.setXY(-100, -100);
      }
