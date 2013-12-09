@@ -123,7 +123,8 @@ public void setup()
     ennemies[i].getSprite().setSpeed(random(-100, 100), random(-300, 300));
   }
   vessel = new Ship(new Sprite(this, "Sprite\\Sakura_flying.png", 7, 1, 50),
-                    new Sprite(this, "Sprite\\Sakura_flying_damage.png", 7, 1, 52));
+                    new Sprite(this, "Sprite\\Sakura_flying_damage.png", 7, 1, 52),
+                    new Sprite(this, "Sprite\\Shield.png", 4, 1, 53));
 
   gameOver = new Sprite(this, "Sprite\\GameOver.png", 1, 1, 100);
   gameOver.setXY(xpos - 50, ypos + 10);
@@ -177,6 +178,10 @@ public void keyEvent(KeyEvent e)
   case ' ':
     if (spell.getFrame() == 5) {
       bomb.fire(bulletFiring);
+      if (bulletFiring == 0)
+      {
+        vessel.activeShield(); 
+      }
       spell.setFrame(0);
     }
     break;

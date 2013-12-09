@@ -2,22 +2,29 @@ class Ship {
 
   Sprite me;
   Sprite damaged;
+  Sprite shield;
   boolean shoot;
   double time;
+  double shieldTimer;
   int bonus;
   int init;
   int life;
   int score;
   float invincible;
 
-  Ship(Sprite _s, Sprite _d)
+  Ship(Sprite _s, Sprite _d, Sprite _shield)
   {
     me = _s;
     damaged = _d;
+    shield = _shield;
     me.setFrameSequence(0, 7, 0.2f);
     me.setDead(false);
     damaged.setFrameSequence(0, 7, 0.2f);
     damaged.setDead(false);
+    shield.setFrameSequence(0, 4, 0.2f);
+    shield.setScale(4);
+    shield.setVisible(false);
+    shieldTimer = 0.0;
     shoot = false;
     me.setXY(150, 250);
     damaged.setVisible(false);
@@ -33,6 +40,18 @@ class Ship {
   public void pre(double elapsedTime)
   {
     time += elapsedTime;
+
+    if (shieldTimer > 0.0)
+    {
+      shieldTimer -= elapsedTime;
+    }
+    
+    if (shieldTimer < 0.0)
+    {
+     shieldTimer = 0.0; 
+     shield.setVisible(false);
+    }
+    
     if (time - bonus > 0.2)
     {
      shoot = true;
@@ -48,6 +67,12 @@ class Ship {
         damaged.setVisible(false); 
       }
     }
+  }
+  
+  public void activeShield()
+  {
+    shield.setVisible(true);
+    shieldTimer = 5.0;
   }
   
   public void bonus()
@@ -89,6 +114,7 @@ class Ship {
     else {
       me.setXY(mouseX, mouseY);
       damaged.setXY(mouseX, mouseY);
+      shield.setXY(mouseX, mouseY);
     }
   }
 
@@ -124,6 +150,11 @@ class Ship {
  
   public boolean damaged()
   {
+    if (shield.isVisible())
+    {
+      return false;
+    }
+    
     damaged.setVisible(true);
     if (invincible != 4.0)
       return false;
