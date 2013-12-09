@@ -27,6 +27,8 @@ Bullet[] bulletsF = new Bullet[NBR_BULLET];
 Bullet[] bulletsT = new Bullet[NBR_BULLET];
 Bullet[] bulletsB = new Bullet[NBR_BULLET];
 Ennemy[] ennemies = new Ennemy[NBR_ENNEMIES];
+Sprite[] lifes = new Sprite[3];
+
 int bulletFiring = 0;
 int lastEnnemy;
 
@@ -102,6 +104,14 @@ public void setup()
     bulletsT[i] = new Bullet(new Sprite(this, "Sprite\\BulletTestT.png", 4, 1, 49), 3);
     bulletsT[i].setScale(0.4f);
     bulletsT[i].fire(-1000, -1000);
+  }
+  
+  for (int i = 0; i < 3; ++i)
+  {
+    lifes[i] = new Sprite(this, "Sprite\\Sakura_walking.png", 3, 1, 2);
+    lifes[i].setFrame(0);
+    lifes[i].setXY(40* (i + 1), 520);
+    lifes[i].setScale(0.5);   
   }
   
   for (int i = 0; i < NBR_ENNEMIES; ++i)
@@ -232,6 +242,12 @@ public void pre() {
 
 void draw()
 {
+  
+   if (vessel.getLife() == 2)
+    lifes[2].setVisible(false);
+  if (vessel.getLife() == 1)
+    lifes[1].setVisible(false);
+
   if (xpos <= -width/2)
     xpos = width/2 + width;
   if (xpos2 <= -width/2)

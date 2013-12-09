@@ -36,6 +36,11 @@ class Ship {
     me.setCollisionRadius(0.9);
     score = 0;
   }
+  
+  public int getLife()
+  {
+    return life;
+  }
 
   public void pre(double elapsedTime)
   {
