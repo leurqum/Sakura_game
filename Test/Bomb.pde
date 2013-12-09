@@ -79,15 +79,15 @@ class Bomb {
   {
     if (fire.isVisible() && fire.cc_collision(e.getSprite()))
      {
-         return e.kill(2);
+         return e.kill(0.1);
      }
     if (ice.isVisible() && ice.cc_collision(e.getSprite()))
      {
-         return e.kill(2);
+         return e.kill(0.1);
      }
     if (thunder.isVisible() && thunder.cc_collision(e.getSprite()))
      {
-         return e.kill(2);
+         return e.kill(0.1);
      }
      return 0;
   }

@@ -5,7 +5,7 @@ import sprites.*;
 
 StopWatch sw = new StopWatch();
 int NBR_BULLET = 25;
-int NBR_ENNEMIES = 100;
+int NBR_ENNEMIES = 30;
 Timer t = new Timer(2000);
 
 PImage bimg;
@@ -119,10 +119,10 @@ public void setup()
     if ((i % 5) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyL.png", 3, 1, 53), 0);
     }
-    else if ((i % 2) == 0) {
+    else if ((i % 3) == 0) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyW.png", 3, 1, 53), 1);
     }
-    else if ((i % 3) == 0) {
+    else if ((i % 3) == 1) {
       ennemies[i] = new Ennemy(new Sprite(this, "Sprite\\EnnemyN.png", 3, 1, 53), 3);
     }
     else {
@@ -220,7 +220,7 @@ public void pre() {
       vessel.score += bulletsB[i].touchEnnemy(ennemies[u]);
       vessel.score += bomb.touchEnnemy(ennemies[u]);
 
-      if (score_tmp != vessel.score && !bomb.isActive() && spell.getFrame() != 5 && random(0,5) < 1.5)
+      if (score_tmp != vessel.score && !bomb.isActive() && spell.getFrame() != 5 && random(0,5) < 1)
       {
         spell.setFrame(spell.getFrame() + 1);
       }
@@ -235,7 +235,7 @@ public void pre() {
   if ((random(0, 240)) < 10)
   {
     ennemies[lastEnnemy].setXY(width + 50, (random(10, height - 10)));
-    ennemies[lastEnnemy].setVelX(-1 * random(50, 100));
+    ennemies[lastEnnemy].setVelX(-1 * random(150, 400));
     ++lastEnnemy;
   }
 }
